@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">MovieMADE</string>
+    <string name="title">Title</string>
+    <string name="language">Language</string>
+    <string name="date">Date</string>
+    <string name="adult">Adult</string>
+    <string name="popularity">Popularity</string>
+    <string name="total">Total</string>
+    <string name="average">Average</string>
+    <string name="description">Description</string>
+    <string name="yes">yes</string>
+    <string name="no">no</string>
+    <string name="movie">Movie</string>
+    <string name="tv">Tv</string>
+    <string name="welcome">Welcome</string>
+    <string name="share">Share</string>
+    <string name="share_title">Bagikan Aplikasi Ini Sekarang</string>
+    <string name="share_text">Segara Lihat Film %s di apps ini</string>
+    <string name="empty_list">Empty List</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="favourite">Favourite</string>
+    <string name="ascending">Ascending</string>
+    <string name="descending">Descending</string>
+    <string name="title_favourite">Favourite</string>
+</resources>

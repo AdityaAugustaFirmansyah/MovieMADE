@@ -1,4 +1,4 @@
-package com.aditya.favourite.moviefavourite
+package com.aditya.favourite
 
 import android.content.Intent
 import android.view.LayoutInflater

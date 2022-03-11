@@ -2,7 +2,6 @@ package com.aditya.moviemade.di
 
 import com.aditya.moviemade.ui.detail.DetailMovieViewModel
 import com.aditya.moviemade.ui.movie.MovieViewModel
-import com.aditya.favourite.moviefavourite.MovieFavouriteViewModel
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -17,7 +16,6 @@ object AppModule {
 
     val viewModelModule = module {
         viewModel { MovieViewModel(get()) }
-        viewModel { MovieFavouriteViewModel(get()) }
         viewModel { DetailMovieViewModel(get()) }
     }
 }

@@ -1,4 +1,4 @@
-package com.aditya.favourite.moviefavourite
+package com.aditya.favourite
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel

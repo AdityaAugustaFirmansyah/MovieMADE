@@ -2,38 +2,39 @@ package com.aditya.moviemade.ui
 
 import android.os.Bundle
 import android.view.Menu
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
-import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupActionBarWithNavController
 import com.aditya.moviemade.R
 import com.aditya.moviemade.databinding.ActivityMainBinding
-import com.aditya.moviemade.ui.movie.MovieFragment
-import com.google.android.material.tabs.TabLayoutMediator
+import org.koin.android.ext.android.bind
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding:ActivityMainBinding
+    private lateinit var navController: NavController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.tabLayoutFavourite.addTab(
-            binding.tabLayoutFavourite.newTab().setText(getString(R.string.movie))
-        )
+        setSupportActionBar(binding.appBar.toolbar)
 
-        binding.tabLayoutFavourite.addTab(
-            binding.tabLayoutFavourite.newTab().setText(getString(R.string.favourite))
-        )
+        val toggle = ActionBarDrawerToggle(this,
+            binding.drawerLayout,
+            binding.appBar.toolbar,
+            R.string.open_navigation_drawer,
+            R.string.close_navigation_drawer)
 
-        binding.viewPagerFavourite.adapter = MainPagerAdapter(this,
-            mutableListOf(MovieFragment(),MovieFavouriteFragment()))
 
-        TabLayoutMediator(
-            binding.tabLayoutFavourite, binding.viewPagerFavourite
-        ) { tab, position ->
-            tab.text = if (position == 0) getString(R.string.movie) else getString(R.string.favourite)
-        }.attach()
+        navController = findNavController(R.id.nav_host_fragment)
+        binding.drawerLayout.addDrawerListener(toggle)
+        NavigationUI.setupWithNavController(binding.navigationView,navController)
+        val appBarConfiguration = AppBarConfiguration(setOf(R.id.destination_favourite,R.id.destination_movie),binding.drawerLayout)
+        setupActionBarWithNavController(navController,appBarConfiguration)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -41,15 +42,4 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    override fun onResume() {
-        super.onResume()
-        binding.viewPagerFavourite.adapter?.notifyDataSetChanged()
-    }
-
-    class MainPagerAdapter(requireActivity: FragmentActivity,private val fragments: MutableList<Fragment>) : FragmentStateAdapter(requireActivity) {
-        override fun getItemCount(): Int = fragments.size
-
-        override fun createFragment(position: Int): Fragment =fragments[position]
-
-    }
 }

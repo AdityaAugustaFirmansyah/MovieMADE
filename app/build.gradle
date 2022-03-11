@@ -43,4 +43,5 @@ dependencies {
     implementation project(":core")
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.10"
+    implementation 'androidx.navigation:navigation-dynamic-features-fragment:2.4.1'
 }

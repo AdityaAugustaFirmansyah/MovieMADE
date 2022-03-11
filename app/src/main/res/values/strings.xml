@@ -22,4 +22,6 @@
     <string name="ascending">Ascending</string>
     <string name="descending">Descending</string>
     <string name="title_favourite">Favourite</string>
+    <string name="open_navigation_drawer">Open Navigation Drawer</string>
+    <string name="close_navigation_drawer">Close navigation Drawer</string>
 </resources>

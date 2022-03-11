@@ -6,18 +6,12 @@
         android:title="@string/movie"
         android:icon="@drawable/ic_baseline_movie"
         app:showAsAction="ifRoom"
-        android:id="@+id/menu_movie"/>
-
-    <item
-        android:title="@string/tv"
-        android:icon="@drawable/ic_baseline_tv"
-        app:showAsAction="ifRoom"
-        android:id="@+id/menu_tv"/>
+        android:id="@+id/destination_movie"/>
 
     <item
         android:title="@string/favourite"
         app:showAsAction="ifRoom"
         android:icon="@drawable/ic_baseline_favorite_24"
-        android:id="@+id/menu_favourite"/>
+        android:id="@+id/destination_favourite"/>
 
 </menu>

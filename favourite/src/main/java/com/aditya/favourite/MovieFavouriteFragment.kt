@@ -1,4 +1,4 @@
-package com.aditya.favourite.moviefavourite
+package com.aditya.favourite
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,11 +9,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.aditya.moviemade.R
 import com.aditya.moviemade.databinding.FragmentMovieBinding
 import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.core.context.loadKoinModules
 
 class MovieFavouriteFragment : Fragment() {
 
     private lateinit var binding: FragmentMovieBinding
-    private val viewModel:MovieFavouriteViewModel by viewModel()
+    private val viewModel: MovieFavouriteViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,9 +27,9 @@ class MovieFavouriteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        loadKoinModules(FavouriteModule.favouriteModule)
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
-        binding.toolbar3.visibility = View.GONE
+        setHasOptionsMenu(true)
         viewModel.getData().observe(viewLifecycleOwner, {
             if (it.isNotEmpty()) {
                 binding.progressBar.visibility = View.GONE

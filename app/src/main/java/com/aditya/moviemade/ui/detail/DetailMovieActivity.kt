@@ -31,7 +31,7 @@ class DetailMovieActivity : AppCompatActivity() {
         }
     }
 
-    private lateinit var movieEntity: com.aditya.core.domain.model.Movie
+    private lateinit var movieEntity: Movie
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,11 +47,11 @@ class DetailMovieActivity : AppCompatActivity() {
                         movieEntity = it
                         binding.apply {
                             Glide.with(this@DetailMovieActivity)
-                                .load(com.aditya.core.data.source.remote.network.ApiClient.BASE_URL_IMAGE + it.posterPath)
+                                .load(ApiClient.BASE_URL_IMAGE + it.posterPath)
                                 .error(R.drawable.ic_broken_image_black).into(posterDetail)
 
                             Glide.with(this@DetailMovieActivity)
-                                .load(com.aditya.core.data.source.remote.network.ApiClient.BASE_URL_IMAGE + it.backdropPath)
+                                .load(ApiClient.BASE_URL_IMAGE + it.backdropPath)
                                 .error(R.drawable.ic_broken_image_black).into(backdrop)
                             tvTitleDetail.text = it.title
                             tvLanguageDetail.text = it.originalLanguage

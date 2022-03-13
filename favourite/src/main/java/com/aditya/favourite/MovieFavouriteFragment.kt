@@ -1,9 +1,7 @@
 package com.aditya.favourite
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.aditya.moviemade.R
@@ -43,6 +41,11 @@ class MovieFavouriteFragment : Fragment() {
                 showError(binding, View.VISIBLE, getString(R.string.empty_list))
             }
         })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        menu.clear()
     }
 
     companion object {

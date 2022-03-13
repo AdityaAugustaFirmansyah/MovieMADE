@@ -14,8 +14,10 @@ abstract class NetworkBoundResource<ResultType,RequestType>(private val executor
             val apiResponse = createCall().first()
             when(apiResponse.status){
                 StatusResponse.SUCCESS ->{
-                    apiResponse.body?.let { saveCallResult(it) }
-                    emitAll(loadFromDb().map { Resource.success(apiResponse.body) })
+                    apiResponse.body?.let { it ->
+                        saveCallResult(it)
+                        emitAll(loadFromDb().map { Resource.success(it) })
+                    }
                 }
                 StatusResponse.EMPTY ->{
                     emitAll(loadFromDb().map { Resource.success(it) })
@@ -33,8 +35,8 @@ abstract class NetworkBoundResource<ResultType,RequestType>(private val executor
     private fun onFetchFailed(){}
     protected abstract fun loadFromDb():Flow<ResultType>
     protected abstract fun shouldFetch(data: ResultType?):Boolean
-    protected abstract fun createCall():Flow<ApiResponse<RequestType>>
-    protected abstract fun saveCallResult(data: RequestType)
+    protected abstract suspend fun createCall():Flow<ApiResponse<RequestType>>
+    protected abstract suspend fun saveCallResult(data: RequestType)
 
     fun asFlow():Flow<Resource<ResultType>> =result
 }

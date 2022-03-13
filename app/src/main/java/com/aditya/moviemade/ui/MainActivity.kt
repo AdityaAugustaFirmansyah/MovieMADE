@@ -11,7 +11,6 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.aditya.moviemade.R
 import com.aditya.moviemade.databinding.ActivityMainBinding
-import org.koin.android.ext.android.bind
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding:ActivityMainBinding

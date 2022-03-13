@@ -3,9 +3,9 @@ package com.aditya.core.utils
 import com.aditya.core.data.source.local.entity.MovieEntity
 import com.aditya.core.domain.model.Movie
 
-fun List<com.aditya.core.data.source.local.entity.MovieEntity>.convertMovieEntityToDomainModel():List<com.aditya.core.domain.model.Movie> {
+fun List<MovieEntity>.convertMovieEntityToDomainModel():List<Movie> {
     return map {
-        com.aditya.core.domain.model.Movie(
+        Movie(
             it.posterPath,
             it.backdropPath,
             it.overview,

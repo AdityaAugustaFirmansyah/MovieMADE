@@ -5,7 +5,7 @@ import com.aditya.core.data.source.local.entity.MovieEntity
 import com.aditya.core.data.source.remote.ApiResponse
 import com.aditya.core.data.source.remote.RemoteDataSource
 import com.aditya.core.data.source.remote.response.DetailMovieResponse
-import com.aditya.core.data.source.remote.response.MovieResponse
+import com.aditya.core.data.source.remote.response.MovieData
 import com.aditya.core.domain.model.Movie
 import com.aditya.core.domain.repository.IMovieRepository
 import com.aditya.core.utils.AppExecutors
@@ -22,7 +22,7 @@ class MovieRepository(
 ) : IMovieRepository {
 
     override fun getAllMovie(sort: String): Flow<Resource<List<Movie>>> {
-        return object : NetworkBoundResource<List<Movie>, MovieResponse>(appExecutors) {
+        return object : NetworkBoundResource<List<Movie>, List<MovieData>>(appExecutors) {
             override fun loadFromDb(): Flow<List<Movie>> {
                 return when (sort) {
                     SortUtils.DEFAULT -> localDataSource.getAllMovie()
@@ -36,12 +36,12 @@ class MovieRepository(
                 return data == null || data.isEmpty()
             }
 
-            override fun createCall(): Flow<ApiResponse<MovieResponse>> {
+            override suspend fun createCall(): Flow<ApiResponse<List<MovieData>>> {
                 return remoteDataSource.getAllMovie()
             }
 
-            override fun saveCallResult(data: MovieResponse) {
-                localDataSource.insertMovies(data.results.map {
+            override suspend fun saveCallResult(data: List<MovieData>) {
+                localDataSource.insertMovies(data.map {
                     MovieEntity(
                         it.posterPath,
                         it.backdropPath,
@@ -89,11 +89,11 @@ class MovieRepository(
                 return data == null
             }
 
-            override fun createCall(): Flow<ApiResponse<DetailMovieResponse>> {
+            override suspend fun createCall(): Flow<ApiResponse<DetailMovieResponse>> {
                 return remoteDataSource.getMovieById(id)
             }
 
-            override fun saveCallResult(data: DetailMovieResponse) {
+            override suspend fun saveCallResult(data: DetailMovieResponse) {
 
             }
 

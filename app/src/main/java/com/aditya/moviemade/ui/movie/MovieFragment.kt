@@ -35,16 +35,16 @@ class MovieFragment : Fragment() {
 
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
 
-        viewModel.getData(com.aditya.core.utils.SortUtils.DEFAULT).observe(viewLifecycleOwner,observer)
+        viewModel.getData(SortUtils.DEFAULT).observe(viewLifecycleOwner,observer)
 
         setHasOptionsMenu(true)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.menu_ascending){
-            viewModel.getData(com.aditya.core.utils.SortUtils.ASCENDING).observe(viewLifecycleOwner,observer)
+            viewModel.getData(SortUtils.ASCENDING).observe(viewLifecycleOwner,observer)
         }else if (item.itemId == R.id.menu_descending){
-            viewModel.getData(com.aditya.core.utils.SortUtils.DESCENDING).observe(viewLifecycleOwner,observer)
+            viewModel.getData(SortUtils.DESCENDING).observe(viewLifecycleOwner,observer)
         }
         return true
     }
@@ -57,7 +57,7 @@ class MovieFragment : Fragment() {
         }
     }
 
-    private val observer = Observer<Resource<List<com.aditya.core.domain.model.Movie>>> {
+    private val observer = Observer<Resource<List<Movie>>> {
         if (it.status== Status.LOADING){
 
             binding.progressBar.visibility = View.VISIBLE
@@ -69,8 +69,9 @@ class MovieFragment : Fragment() {
             binding.progressBar.visibility = View.GONE
 
             binding.recyclerView.apply {
-                val adapter = it.data?.let { it1 -> MovieAdapter(it1) }
-                this.adapter = adapter
+                it.data?.let { it1 ->
+                    this.adapter = MovieAdapter(it1)
+                }
             }
 
             if (it.message?.isNotEmpty() == true) {

@@ -16,7 +16,7 @@ interface MovieDao {
     fun getAllMoviesDesc():Flow<List<MovieEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertMovies(movieList: List<MovieEntity>)
+    suspend fun insertMovies(movieList: List<MovieEntity>)
 
     @Update
     fun updateMovie(movieEntity: MovieEntity)

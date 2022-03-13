@@ -5,10 +5,12 @@ import com.aditya.core.data.source.remote.response.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
+
+// Buat Test Nanti
 object MovieDummy {
-    fun generateMovies(): List<com.aditya.core.data.source.local.entity.MovieEntity> {
+    fun generateMovies(): List<MovieEntity> {
         return generateMoviesResponse().results.map {
-            com.aditya.core.data.source.local.entity.MovieEntity(
+            MovieEntity(
                 it.posterPath,
                 it.backdropPath,
                 it.overview,
@@ -26,9 +28,9 @@ object MovieDummy {
         }
     }
 
-    fun getDetailMovie(): com.aditya.core.data.source.local.entity.MovieEntity {
+    fun getDetailMovie(): MovieEntity {
         val movie = generateDetailMovieResponse()
-        return com.aditya.core.data.source.local.entity.MovieEntity(
+        return MovieEntity(
             movie.posterPath,
             movie.backdropPath,
             movie.overview,
@@ -45,14 +47,14 @@ object MovieDummy {
         )
     }
 
-    fun generateMoviesResponse(): com.aditya.core.data.source.remote.response.MovieResponse {
-        val results = Gson().fromJson<List<com.aditya.core.data.source.remote.response.MovieData>>(
-            DATA_MOVIE, object : TypeToken<List<com.aditya.core.data.source.remote.response.MovieData>>() {}.type)
-        return com.aditya.core.data.source.remote.response.MovieResponse(results, "")
+    fun generateMoviesResponse(): MovieResponse {
+        val results = Gson().fromJson<List<MovieData>>(
+            DATA_MOVIE, object : TypeToken<List<MovieData>>() {}.type)
+        return MovieResponse(results, "")
     }
-    fun generateDetailMovieResponse(): com.aditya.core.data.source.remote.response.DetailMovieResponse {
+    fun generateDetailMovieResponse(): DetailMovieResponse {
         val movie = generateMovies()[0]
-        return com.aditya.core.data.source.remote.response.DetailMovieResponse(
+        return DetailMovieResponse(
             movie.posterPath,
             movie.backdropPath,
             movie.overview,

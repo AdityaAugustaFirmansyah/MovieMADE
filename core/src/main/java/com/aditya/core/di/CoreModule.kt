@@ -9,6 +9,9 @@ import com.aditya.core.data.source.remote.network.RestApi
 import com.aditya.core.domain.repository.IMovieRepository
 import com.aditya.core.utils.AppExecutors
 import com.aditya.core.BuildConfig
+import net.sqlcipher.database.SQLiteDatabase
+import net.sqlcipher.database.SupportFactory
+import okhttp3.CertificatePinner
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
@@ -18,17 +21,25 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object CoreModule {
     val databaseModule = module {
+        val pharse = SQLiteDatabase.getBytes("made".toCharArray())
+        val factory = SupportFactory(pharse)
         factory { get<DatabaseLocal>().movieDao() }
         single { Room.databaseBuilder(androidContext(),
             DatabaseLocal::class.java,
             "movie.db")
             .fallbackToDestructiveMigration()
+            .openHelperFactory(factory)
             .build() }
     }
 
     val networkModule = module {
         single {
+            val hostName = "https://developers.themoviedb.org/"
+            val certificatePinner = CertificatePinner.Builder()
+                .add(hostName,"sha256/iG3RcySOPXk22XlLdaWhzd63hSWN6gdoJkuezAQ8pF4=")
+                .build()
             OkHttpClient.Builder()
+                .certificatePinner(certificatePinner)
                 .addInterceptor(Interceptor {
                     var request = it.request()
                     val url = request.url().newBuilder()

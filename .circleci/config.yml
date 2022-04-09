@@ -1,16 +1,7 @@
-# Use the latest 2.1 version of CircleCI pipeline process engine.
-# See: https://circleci.com/docs/2.0/configuration-reference
-# For a detailed guide to building and testing on Android, read the docs:
-# https://circleci.com/docs/2.0/language-android/ for more details.
 version: 2.1
-
-# Orbs are reusable packages of CircleCI configuration that you may share across projects, enabling you to create encapsulated, parameterized commands, jobs, and executors that can be used across multiple projects.
-# See: https://circleci.com/docs/2.0/orb-intro/
 orbs:
   android: circleci/android@0.2.1
 
-# Define a job to be invoked later in a workflow.
-# See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
   build:
     executor: android/android
@@ -25,10 +16,10 @@ jobs:
           name: Download Dependencies
           command: ./gralde androidDependencies
       - save_cache:
-          key: 'android-orb-v1-{{epoch}}'
+          key: 'android-orb-v1-{{ epoch }}'
           paths:
-          - ~/.android/build-cache
-          - ~/.android/cache
+            - ~/.android/build-cache
+            - ~/.android/cache
       - run:
           name: Run Build
           command: ./gradlew build

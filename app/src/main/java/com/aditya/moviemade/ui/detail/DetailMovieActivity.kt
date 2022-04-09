@@ -18,7 +18,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class DetailMovieActivity : AppCompatActivity() {
     private var isFavourite: Boolean = false
     private lateinit var binding: ActivityDetailBinding
-    val viewModel: DetailMovieViewModel by viewModel()
+    private val viewModel: DetailMovieViewModel by viewModel()
     private var menu: Menu? = null
 
     companion object {
@@ -114,7 +114,7 @@ class DetailMovieActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.share) {
             val mimeType = "text/plain"
-            ShareCompat.IntentBuilder(this)
+            ShareCompat.IntentBuilder.from(this)
                 .setType(mimeType)
                 .setChooserTitle(getString(R.string.share_title))
                 .setText(getString(R.string.share_text, movieEntity.title))

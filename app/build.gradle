@@ -1,20 +1,22 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'kotlin-parcelize'
+    id 'kotlin-android-extensions'
     id 'kotlin-kapt'
 }
 apply from:'../shared_dependencies.gradle'
 
 android {
-    compileSdk 31
+    compileSdk 30
+    buildToolsVersion "30.0.2"
 
     defaultConfig {
         applicationId "com.aditya.moviemade"
-        minSdk 21
-        targetSdk 31
+        minSdk 16
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -46,7 +48,7 @@ android {
 dependencies {
     implementation project(":core")
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.6.10"
-    implementation 'androidx.navigation:navigation-dynamic-features-fragment:2.4.1'
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.8.1'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.4.10"
+    implementation 'androidx.navigation:navigation-dynamic-features-fragment:2.3.5'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.4'
 }

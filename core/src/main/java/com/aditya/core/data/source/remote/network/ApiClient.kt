@@ -1,7 +1,5 @@
 package com.aditya.core.data.source.remote.network
 
-import com.aditya.core.BuildConfig
-
 object ApiClient {
-    const val BASE_URL_IMAGE = BuildConfig.BASE_URL_IMAGE
+    const val BASE_URL_IMAGE = "https://image.tmdb.org/t/p/original/"
 }

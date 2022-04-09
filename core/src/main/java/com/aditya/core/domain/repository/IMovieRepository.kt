@@ -8,5 +8,5 @@ interface IMovieRepository {
     fun getAllMovie(sort:String):Flow<Resource<List<Movie>>>
     fun getMovieById(id:String):Flow<Resource<Movie>>
     fun getAllMovieFavourite():Flow<List<Movie>>
-    fun setFavouriteMovie(movie: Movie, state:Boolean)
+    suspend fun setFavouriteMovie(movie: Movie, state:Boolean)
 }

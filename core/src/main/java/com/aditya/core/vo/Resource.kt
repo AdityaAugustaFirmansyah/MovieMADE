@@ -7,7 +7,7 @@ data class Resource<T>(
 ){
     companion object{
         fun <T> success(data:T?):Resource<T> = Resource(Status.SUCCESS,data,null)
-        fun <T> error(msg:String?,data:T?):Resource<T> = Resource(Status.FAILURE,data,msg)
+        fun <T> error(msg:String?):Resource<T> = Resource(Status.FAILURE,null,msg)
         fun <T> loading(data:T?=null):Resource<T> = Resource(Status.LOADING,data,null)
     }
 }

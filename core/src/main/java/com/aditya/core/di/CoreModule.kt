@@ -7,7 +7,6 @@ import com.aditya.core.data.source.local.room.DatabaseLocal
 import com.aditya.core.data.source.remote.RemoteDataSource
 import com.aditya.core.data.source.remote.network.RestApi
 import com.aditya.core.domain.repository.IMovieRepository
-import com.aditya.core.utils.AppExecutors
 import com.aditya.core.BuildConfig
 import net.sqlcipher.database.SQLiteDatabase
 import net.sqlcipher.database.SupportFactory
@@ -18,6 +17,7 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 object CoreModule {
     val databaseModule = module {
@@ -26,7 +26,7 @@ object CoreModule {
         factory { get<DatabaseLocal>().movieDao() }
         single { Room.databaseBuilder(androidContext(),
             DatabaseLocal::class.java,
-            "movie.db")
+            "moviemade")
             .fallbackToDestructiveMigration()
             .openHelperFactory(factory)
             .build() }
@@ -34,12 +34,15 @@ object CoreModule {
 
     val networkModule = module {
         single {
-            val hostName = "https://developers.themoviedb.org/"
+            val hostName = "api.themoviedb.org"
             val certificatePinner = CertificatePinner.Builder()
-                .add(hostName,"sha256/iG3RcySOPXk22XlLdaWhzd63hSWN6gdoJkuezAQ8pF4=")
+                .add(hostName,"sha256/oD/WAoRPvbez1Y2dfYfuo4yujAcYHXdv1Ivb2v2MOKk=")
                 .build()
+
             OkHttpClient.Builder()
                 .certificatePinner(certificatePinner)
+                .connectTimeout(120, TimeUnit.SECONDS)
+                .readTimeout(120, TimeUnit.SECONDS)
                 .addInterceptor(Interceptor {
                     var request = it.request()
                     val url = request.url().newBuilder()
@@ -51,7 +54,7 @@ object CoreModule {
         }
         single {
             val retrofit = Retrofit.Builder()
-            .baseUrl(BuildConfig.BASE_URL)
+            .baseUrl("https://api.themoviedb.org/3/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(get())
             .build()
@@ -61,7 +64,6 @@ object CoreModule {
     val repoModule = module {
         single { LocalDataSource(get()) }
         single { RemoteDataSource(get()) }
-        factory { AppExecutors() }
-        single<IMovieRepository> { MovieRepository(get(),get(),get()) }
+        single<IMovieRepository> { MovieRepository(get(),get()) }
     }
 }

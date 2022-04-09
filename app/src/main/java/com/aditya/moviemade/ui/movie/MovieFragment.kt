@@ -8,12 +8,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.aditya.moviemade.R
-import com.aditya.moviemade.databinding.FragmentMovieBinding
 import com.aditya.core.domain.model.Movie
 import com.aditya.core.utils.SortUtils
 import com.aditya.core.vo.Resource
 import com.aditya.core.vo.Status
+import com.aditya.moviemade.R
+import com.aditya.moviemade.databinding.FragmentMovieBinding
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class MovieFragment : Fragment() {

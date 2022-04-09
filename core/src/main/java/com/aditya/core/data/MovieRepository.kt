@@ -8,7 +8,6 @@ import com.aditya.core.data.source.remote.response.DetailMovieResponse
 import com.aditya.core.data.source.remote.response.MovieData
 import com.aditya.core.domain.model.Movie
 import com.aditya.core.domain.repository.IMovieRepository
-import com.aditya.core.utils.AppExecutors
 import com.aditya.core.utils.SortUtils
 import com.aditya.core.utils.convertMovieEntityToDomainModel
 import com.aditya.core.vo.Resource
@@ -17,12 +16,11 @@ import kotlinx.coroutines.flow.map
 
 class MovieRepository(
     private val remoteDataSource: RemoteDataSource,
-    private val localDataSource: LocalDataSource,
-    private val appExecutors: AppExecutors
+    private val localDataSource: LocalDataSource
 ) : IMovieRepository {
 
     override fun getAllMovie(sort: String): Flow<Resource<List<Movie>>> {
-        return object : NetworkBoundResource<List<Movie>, List<MovieData>>(appExecutors) {
+        return object : NetworkBoundResource<List<Movie>, List<MovieData>>() {
             override fun loadFromDb(): Flow<List<Movie>> {
                 return when (sort) {
                     SortUtils.DEFAULT -> localDataSource.getAllMovie()
@@ -43,19 +41,19 @@ class MovieRepository(
             override suspend fun saveCallResult(data: List<MovieData>) {
                 localDataSource.insertMovies(data.map {
                     MovieEntity(
-                        it.posterPath,
-                        it.backdropPath,
+                        it.poster_path,
+                        it.backdrop_path,
                         it.overview,
-                        it.releaseDate,
+                        it.release_date,
                         it.id,
-                        it.originalTitle,
+                        it.original_title,
                         it.title,
-                        it.originalLanguage,
+                        it.original_language,
                         it.popularity,
                         false,
-                        it.voteCount,
+                        it.vote_count,
                         it.adult,
-                        it.voteAverage
+                        it.vote_average
                     )
                 })
             }
@@ -64,7 +62,7 @@ class MovieRepository(
     }
 
     override fun getMovieById(id: String): Flow<Resource<Movie>> {
-        return object : NetworkBoundResource<Movie, DetailMovieResponse>(appExecutors) {
+        return object : NetworkBoundResource<Movie, DetailMovieResponse>() {
             override fun loadFromDb(): Flow<Movie> {
                 return localDataSource.getMovie(id.toInt()).map {
                     Movie(
@@ -104,25 +102,23 @@ class MovieRepository(
         return localDataSource.getAllMovieFavourite().map { it.convertMovieEntityToDomainModel() }
     }
 
-    override fun setFavouriteMovie(movie: Movie, state: Boolean) {
-        appExecutors.diskIO().execute {
-            localDataSource.updateMovie(
-                MovieEntity(
-                    movie.posterPath,
-                    movie.backdropPath,
-                    movie.overview,
-                    movie.releaseDate,
-                    movie.id,
-                    movie.originalTitle,
-                    movie.title,
-                    movie.originalLanguage,
-                    movie.popularity,
-                    movie.favourite,
-                    movie.voteCount,
-                    movie.adult,
-                    movie.voteAverage
-                )
+    override suspend fun setFavouriteMovie(movie: Movie, state: Boolean) {
+        localDataSource.updateMovie(
+            MovieEntity(
+                movie.posterPath,
+                movie.backdropPath,
+                movie.overview,
+                movie.releaseDate,
+                movie.id,
+                movie.originalTitle,
+                movie.title,
+                movie.originalLanguage,
+                movie.popularity,
+                movie.favourite,
+                movie.voteCount,
+                movie.adult,
+                movie.voteAverage
             )
-        }
+        )
     }
 }

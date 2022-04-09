@@ -5,34 +5,34 @@ plugins {
 }
 apply from: '../shared_dependencies.gradle'
 android {
-    compileSdk 31
+    compileSdk 30
+    buildToolsVersion "30.0.2"
 
     defaultConfig {
         applicationId "com.aditya.favourite"
-        minSdk 21
-        targetSdk 31
+        minSdk 16
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    buildTypes {
-        release {
-            minifyEnabled false
-        }
-        debug {
-            minifyEnabled false
-        }
-    }
-
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildFeatures{
+        viewBinding = true
     }
 }
 
 dependencies {
-    implementation project(":app")
     implementation project(":core")
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.6.10"
+    implementation project(":app")
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.4.10"
 }

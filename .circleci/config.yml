@@ -15,7 +15,7 @@ jobs:
   build:
     executor: android/android
     steps:
-      -checkout
+      - checkout
       - restore_cache:
         key: android-orb-v1
       -run:

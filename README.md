@@ -1,1 +1,1 @@
-[![AdityaAugustaFirmansyah](https://circleci.com/gh/AdityaAugustaFirmansyah/MovieMade.svg?style=svg)](https://circleci.com/gh/AdityaAugustaFirmansyah/MovieMade)
+[![AdityaAugustaFirmansyah](https://circleci.com/gh/AdityaAugustaFirmansyah/MovieMADE.svg?style=svg)](https://circleci.com/gh/AdityaAugustaFirmansyah/MovieMADE)

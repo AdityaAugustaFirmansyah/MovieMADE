@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.aditya.core.domain.model.Movie
 import com.aditya.core.domain.usecase.MovieUseCase
 import com.aditya.core.vo.Resource
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class DetailMovieViewModel(private val useCase: MovieUseCase):ViewModel() {
@@ -16,7 +17,7 @@ class DetailMovieViewModel(private val useCase: MovieUseCase):ViewModel() {
     }
 
     fun setFavourite(movieEntity: Movie){
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             movieEntity.favourite = !movieEntity.favourite
             useCase.setFavourite(movieEntity,movieEntity.favourite)
         }

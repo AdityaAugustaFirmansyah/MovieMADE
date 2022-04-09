@@ -15,5 +15,6 @@
         android:text="@string/welcome"
         android:textColor="@color/white"
         android:textSize="24sp"
-        android:textAlignment="center"/>
+        android:textAlignment="center"
+        android:gravity="center_horizontal" />
 </LinearLayout>
